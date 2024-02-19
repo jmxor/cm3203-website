@@ -1,3 +1,4 @@
+import NavItem from "@/Components/NavItem";
 import {motion} from "framer-motion";
 
 interface NavbarProps {
@@ -7,6 +8,7 @@ interface NavbarProps {
 export default function Navbar(props: NavbarProps) {
   const {isOpen} = props;
 
+  // TODO: fix navbar position animation error when resizing window
   return (
     <motion.nav
       className="absolute top-0 left-0 z-10 w-full px-2 bg-white sm:static sm:shrink-0 sm:w-64"
@@ -24,28 +26,19 @@ export default function Navbar(props: NavbarProps) {
       animate={isOpen || window.innerWidth > 640 ? "open": "closed"}
     >
       <ul>
-        <li>
-          Symmetric Cryptography
-          <ul>
-            <li>
-              Block Ciphers
-              <ul>
-                <li>DES</li>
-                <li>
-                  Modes Of Operation
-                  <ul>
-                    <li>ECB</li>
-                    <li>CBC</li>
-                    <li>CTR</li>
-                    <li>GCM</li>
-                    <li>PCBC</li>
-                    <li>OFB</li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+        <NavItem name="Symmetric Cryptography" href="">
+          <NavItem name="Block Ciphers" href="">
+            <NavItem name="DES" href="" />
+            <NavItem name="Modes of Operation" href="">
+              <NavItem name="ECB" href=""/>
+              <NavItem name="CBC" href=""/>
+              <NavItem name="CTR" href=""/>
+              <NavItem name="GCM" href=""/>
+              <NavItem name="PCBC" href=""/>
+              <NavItem name="OFB" href=""/>
+            </NavItem>
+          </NavItem>
+        </NavItem>
       </ul>
     </motion.nav>
   )
