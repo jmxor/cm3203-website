@@ -28,7 +28,7 @@ export default function MainLayout({
 
       <div className="relative w-full mx-auto sm:flex 2xl:container">
         <Navbar isOpen={isOpen} />
-        <main className="px-2">
+        <main className="px-2 sm:grow">
           {children}
         </main>
       </div>

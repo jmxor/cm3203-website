@@ -9,6 +9,8 @@ export default function Navbar(props: NavbarProps) {
   const {isOpen} = props;
 
   // TODO: fix navbar position animation error when resizing window
+  // TODO: fix navbar link sizing on mobile
+  // TODO: make close navbar when clicking link
   return (
     <motion.nav
       className="absolute top-0 left-0 z-10 w-full px-2 bg-white sm:static sm:shrink-0 sm:w-64"
@@ -28,7 +30,7 @@ export default function Navbar(props: NavbarProps) {
       <ul>
         <NavItem name="Symmetric Cryptography" href="">
           <NavItem name="Block Ciphers" href="">
-            <NavItem name="DES" href="" />
+            <NavItem name="DES" href="/symmetric-cryptography/block-ciphers/des-cipher" />
             <NavItem name="Modes of Operation" href="">
               <NavItem name="ECB" href=""/>
               <NavItem name="CBC" href=""/>
