@@ -2,6 +2,7 @@
 
 import Navbar from "@/Components/Navbar";
 import NavToggle from "@/Components/NavToggle";
+import useWindowDimensions from "@/hooks/useWindowDimensions";
 import {useCycle} from "framer-motion";
 
 export default function MainLayout({
@@ -10,6 +11,11 @@ export default function MainLayout({
   children: React.ReactNode;
 }>) {
   const [isOpen, toggleOpen] = useCycle(false, true)
+  const {width} = useWindowDimensions();
+
+  if (width > 640 && !isOpen) {
+    toggleOpen()
+  }
 
   return (
     <>

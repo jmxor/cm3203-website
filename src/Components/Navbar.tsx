@@ -9,7 +9,6 @@ export default function Navbar(props: NavbarProps) {
   const {isOpen} = props;
 
   // TODO: fix navbar position animation error when resizing window
-  // TODO: fix navbar link sizing on mobile
   // TODO: make close navbar when clicking link
   return (
     <motion.nav
@@ -25,7 +24,7 @@ export default function Navbar(props: NavbarProps) {
         }
       }}
       initial={false}
-      animate={isOpen || window.innerWidth > 640 ? "open": "closed"}
+      animate={isOpen ? "open": "closed"}
     >
       <ul>
         <NavItem name="Symmetric Cryptography" href="">
