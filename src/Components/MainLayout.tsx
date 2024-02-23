@@ -19,7 +19,7 @@ export default function MainLayout({
 
   return (
     <>
-      <header className="h-12">
+      <header className="h-12 border-b border-black">
         <div className="flex h-full mx-auto px-2 items-center justify-between 2xl:container">
           <div className="flex items-center">
             <div className="w-8 h-8 bg-black rounded"/>
@@ -34,7 +34,7 @@ export default function MainLayout({
 
       <div className="relative w-full mx-auto sm:flex 2xl:container">
         <Navbar isOpen={isOpen} />
-        <main className="px-2 sm:grow">
+        <main className="px-2 py-1 sm:grow">
           {children}
         </main>
       </div>
