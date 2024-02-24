@@ -18,9 +18,9 @@ export default function AnimationInput(props: AnimationInputProps) {
   }, [textareaRef, value]);
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <textarea
-        className="w-full min-h-[72px] px-1 bg-transparent border border-black rounded font-mono resize-none"
+        className="w-full px-1 bg-transparent border border-black rounded font-mono resize-none"
         ref={textareaRef}
         value={value}
         onChange={onChange}
