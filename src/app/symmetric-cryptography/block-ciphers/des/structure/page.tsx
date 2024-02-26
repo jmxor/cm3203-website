@@ -1,5 +1,6 @@
 "use client"
 
+import {BitGrid8x8} from "@/Components/BitGrid";
 import FlowControl from "@/Components/FlowControl";
 import {useState} from "react";
 import {motion, useCycle} from "framer-motion";
@@ -82,34 +83,14 @@ export default function DESCipherPage() {
         <div className="flex justify-between">
           <div className="flex flex-col items-center">
             <h1>Block</h1>
-            <div className="relative text-center">
-              {/* Grid */}
-              <div className="grid grid-cols-8 border border-black">
-                {Array(64).fill(null).map((_, k) => (
-                  <div key={k} className="w-6 h-6 border border-black"/>
-                ))}
-              </div>
-
-              {/* Bits */}
-              <div className="absolute top-0 left-0 grid grid-cols-8 border border-transparent font-mono">
-                {block.split('').map((b, k) => (
-                  <motion.div
-                    key={k}
-                    className="absolute w-6 h-6"
-                    animate={{
-                      x: ((animationStep > 3 ? IPTransform[k] : k) % 8) * 24,
-                      y: Math.floor((animationStep > 3 ? IPTransform[k] : k) / 8) * 24,
-                    }}
-                    transition={{ease: "easeInOut"}}
-                    initial={false}
-                  >
-                    {b}
-                  </motion.div>
-                ))}
-              </div>
-            </div>
+            <BitGrid8x8
+              content={block}
+              transformation={IPTransform}
+              isAnimating={animationStep > 3}
+            />
           </div>
 
+          {/* TODO: refactor stage display into separate component*/}
           <ol className="flex flex-col mt-6 border border-black text-center">
             <motion.li
               className="h-6 border border-black"
@@ -117,9 +98,8 @@ export default function DESCipherPage() {
             >Padding</motion.li>
             <motion.li
               className="h-6 border border-black"
-              animate={{backgroundColor: (animationStep >= 3 && animationStep < 5) ? 'yellow' : ''}}
+              animate={{backgroundColor: (animationStep >= 3 && animationStep < 6) ? 'yellow' : ''}}
             >Initial Permutation</motion.li>
-            <motion.li className="h-6 border border-black">Split Block</motion.li>
             <motion.li className="h-6 border border-black">Expansion</motion.li>
             <motion.li className="h-6 border border-black">Key Mixing</motion.li>
             <motion.li className="h-6 border border-black">Substitution</motion.li>
