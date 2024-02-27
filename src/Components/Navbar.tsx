@@ -34,7 +34,7 @@ export default function Navbar(props: NavbarProps) {
               <NavItem name="Key-Schedule" href="" />
             </NavItem>
             <NavItem name="Modes of Operation" href="">
-              <NavItem name="ECB" href=""/>
+              <NavItem name="ECB" href="/symmetric-cryptography/block-ciphers/modes/ecb"/>
               <NavItem name="CBC" href=""/>
               <NavItem name="CTR" href=""/>
               <NavItem name="GCM" href=""/>
