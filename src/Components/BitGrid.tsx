@@ -6,7 +6,7 @@ interface BitGridProps {
   isAnimating: boolean
 }
 
-export function BitGrid8x8(props: BitGridProps) {
+export function PermutationAnimation(props: BitGridProps) {
   const {content, transformation, isAnimating} = props;
 
   return (
@@ -40,7 +40,7 @@ export function BitGrid8x8(props: BitGridProps) {
 }
 
 // TODO: possibly combine bitgrids into one class
-export function BitGrid8x4(props: BitGridProps) {
+export function ExpansionAnimation(props: BitGridProps) {
   const {content, transformation, isAnimating} = props;
 
   return (

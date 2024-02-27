@@ -1,9 +1,10 @@
 "use client"
 
-import {BitGrid8x4, BitGrid8x8} from "@/Components/BitGrid";
+import AnimationStageDisplay from "@/Components/AnimationStageDisplay";
+import {ExpansionAnimation, PermutationAnimation} from "@/Components/BitGrid";
 import FlowControl from "@/Components/FlowControl";
 import {useState} from "react";
-import {motion, useCycle} from "framer-motion";
+import {motion} from "framer-motion";
 
 export default function DESCipherPage() {
   const [animationStep, setAnimationStep] = useState(0);
@@ -11,7 +12,6 @@ export default function DESCipherPage() {
   const [animationInput, setAnimationInput] = useState('')
   const [block, setBlock] = useState('');
   const [permutedBlock, setPermutedBlock] = useState('');
-  const [isAnimated, cycleAnimated] = useCycle(false, true)
 
   const startAnimation = () => {
     setAnimationStep(0);
@@ -23,11 +23,11 @@ export default function DESCipherPage() {
     setAnimationStep(animationStep + 1)
 
     switch (animationStep) {
-      case 1:
+      case 0:
         // TODO: Change padding to actual padding algorithm
         setBlock(animationInput.padEnd(64, '0'))
         break;
-      case 4:
+      case 2:
         // calculate permuted block
         let pBlock = ''
         for (let i = 57; i <= 63; i += 2) {
@@ -101,39 +101,22 @@ export default function DESCipherPage() {
           <div className="flex flex-col items-center">
             <h1>Block</h1>
             {
-              animationStep <= 4 ?
-                <BitGrid8x8
+              animationStep <= 2 ?
+                <PermutationAnimation
                   content={block}
                   transformation={IPTransform}
-                  isAnimating={animationStep > 3}
+                  isAnimating={animationStep >= 2}
                 />
                 :
-                <motion.div className="flex flex-col" animate={{gap: animationStep > 4 ? "48px" : "0px"}}>
-                  <BitGrid8x4 content={permutedBlock.slice(0,32)} transformation={[]} isAnimating={false} />
-                  <BitGrid8x4 content={permutedBlock.slice(32,64)} transformation={[]} isAnimating={false} />
+                <motion.div className="flex flex-col" animate={{gap: animationStep > 2 ? "48px" : "0px"}}>
+                  <ExpansionAnimation content={permutedBlock.slice(0,32)} transformation={[]} isAnimating={false} />
+                  <ExpansionAnimation content={permutedBlock.slice(32,64)} transformation={[]} isAnimating={false} />
                 </motion.div>
             }
           </div>
 
           {/* Animation Stage indicator*/}
-          {/* TODO: refactor stage display into separate component*/}
-          {/* TODO: possibly add moving coloured indicator instead of changing bg colour*/}
-          <ol className="flex flex-col mt-6 border border-black text-center">
-            <motion.li
-              className="h-6 border border-black"
-              animate={{backgroundColor: (animationStep >= 1 && animationStep < 3) ? 'yellow' : ''}}
-            >Padding</motion.li>
-            <motion.li
-              className="h-6 border border-black"
-              animate={{backgroundColor: (animationStep >= 3 && animationStep < 6) ? 'yellow' : ''}}
-            >Initial Permutation</motion.li>
-            <motion.li className="h-6 border border-black">Expansion</motion.li>
-            <motion.li className="h-6 border border-black">Key Mixing</motion.li>
-            <motion.li className="h-6 border border-black">Substitution</motion.li>
-            <motion.li className="h-6 border border-black">Permutation</motion.li>
-
-            <li className="h-6 border border-black">Final Permutation</li>
-          </ol>
+          <AnimationStageDisplay animationStep={animationStep} />
         </div>
 
         <div className="flex justify-center">
