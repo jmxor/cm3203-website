@@ -28,11 +28,7 @@ export default function Navbar(props: NavbarProps) {
       <ul>
         <NavItem name="Symmetric Cryptography" href="">
           <NavItem name="Block Ciphers" href="">
-            <NavItem name="DES" href="" >
-              <NavItem name="Feistel Structure" href="/symmetric-cryptography/block-ciphers/des/structure" />
-              <NavItem name="Feistel Function" href="" />
-              <NavItem name="Key-Schedule" href="" />
-            </NavItem>
+            <NavItem name="DES" href="/symmetric-cryptography/block-ciphers/des" />
             <NavItem name="Modes of Operation" href="">
               <NavItem name="ECB" href="/symmetric-cryptography/block-ciphers/modes/ecb"/>
               <NavItem name="CBC" href=""/>
