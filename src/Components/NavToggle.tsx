@@ -24,7 +24,7 @@ export default function NavToggle(props: NavToggleProps) {
 
   return (
     <motion.button
-      className="flex flex-col gap-1 justify-between px-2 sm:hidden"
+      className="flex flex-col gap-1 justify-between sm:hidden"
       onClick={onClick}
       initial={"closed"}
       animate={isOpen ? "open": "closed"}
