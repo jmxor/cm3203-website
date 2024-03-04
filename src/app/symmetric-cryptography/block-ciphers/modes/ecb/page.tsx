@@ -21,7 +21,7 @@ export default function ECBModePage() {
 
       <br/>
 
-      <div className="w-full overflow-clip border border-transparent sm:w-1/3">
+      <div className="w-full overflow-clip border border-transparent">
         <motion.div
           className="flex"
           animate={{x: Math.floor(animationStep / stepsPerBlock) * -100 + "%"}}
