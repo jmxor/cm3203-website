@@ -1,7 +1,8 @@
 "use client"
 
-import AnimationStageDisplay from "@/Components/AnimationStageDisplay";
-import {ExpansionAnimation, PermutationAnimation} from "@/Components/BitGrid";
+import AnimationStageDisplay from "@/Components/des-animations/AnimationStageDisplay";
+import PermutationAnimation from "@/Components/des-animations/PermutationAnimation";
+import ExpansionAnimation from "@/Components/des-animations/ExpansionAnimation";
 import FlowControl from "@/Components/FlowControl";
 import {useState} from "react";
 import {motion} from "framer-motion";
@@ -77,8 +78,6 @@ export default function DESCipherPage() {
     62, 54, 46, 38, 30, 22, 14, 6,
   ];
 
-  // TODO: fix spacing between bits and step animations
-
   return (
     <>
       <section className="w-full flex flex-col sm:w-1/3">
@@ -96,28 +95,30 @@ export default function DESCipherPage() {
           Start Encryption
         </button>
 
-        <div className="flex justify-between">
-          {/*Animation Section*/}
-          <div className="flex flex-col items-center">
-            <h1>Block</h1>
-            {
-              animationStep <= 2 ?
-                <PermutationAnimation
-                  content={block}
-                  transformation={IPTransform}
-                  isAnimating={animationStep >= 2}
-                />
-                :
-                <motion.div className="flex flex-col" animate={{gap: animationStep > 2 ? "48px" : "0px"}}>
-                  <ExpansionAnimation content={permutedBlock.slice(0,32)} transformation={[]} isAnimating={false} />
-                  <ExpansionAnimation content={permutedBlock.slice(32,64)} transformation={[]} isAnimating={false} />
-                </motion.div>
-            }
-          </div>
-
-          {/* Animation Stage indicator*/}
-          <AnimationStageDisplay animationStep={animationStep} />
+        {/*Animation Section*/}
+        <div className="flex flex-col items-center">
+          <h1>Block</h1>
+          {
+            animationStep <= 2 ?
+              <PermutationAnimation
+                content={block}
+                transformation={IPTransform}
+                isAnimating={animationStep >= 2}
+              />
+              :
+              <motion.div
+                className="flex flex-col"
+                animate={{gap: animationStep > 2 ? "48px" : "0px"}}
+              >
+                <ExpansionAnimation content={permutedBlock.slice(0,32)} isExpanded={false} isAnimating={false} />
+                <ExpansionAnimation content={permutedBlock.slice(32,64)} isExpanded={animationStep >= 4} isAnimating={false} />
+              </motion.div>
+          }
         </div>
+
+        {/* Animation Stage indicator*/}
+        {/* TODO: Restyle display to be below animation*/}
+        <AnimationStageDisplay animationStep={animationStep} />
 
         <div className="flex justify-center">
           <FlowControl

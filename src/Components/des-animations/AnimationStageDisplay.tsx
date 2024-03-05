@@ -12,15 +12,15 @@ export default function AnimationStageDisplay(props: AnimationStageDisplayProps)
     <ol className="flex flex-col mt-6 border border-black text-center">
       <motion.li
         className="h-6 border border-black"
-        animate={{backgroundColor: (animationStep >= 1 && animationStep < 2) ? 'yellow' : ''}}
+        animate={{backgroundColor: (animationStep == 1) ? 'yellow' : ''}}
       >Padding</motion.li>
       <motion.li
         className="h-6 border border-black"
-        animate={{backgroundColor: (animationStep >= 2 && animationStep < 4) ? 'yellow' : ''}}
+        animate={{backgroundColor: (animationStep == 2) ? 'yellow' : ''}}
       >Initial Permutation</motion.li>
       <motion.li
         className="h-6 border border-black"
-        animate={{backgroundColor: (animationStep >= 4 && animationStep < 8) ? 'yellow' : ''}}
+        animate={{backgroundColor: (animationStep >= 3 && animationStep < 6) ? 'yellow' : ''}}
       >Expansion</motion.li>
       <motion.li className="h-6 border border-black">Key Mixing</motion.li>
       <motion.li className="h-6 border border-black">Substitution</motion.li>
