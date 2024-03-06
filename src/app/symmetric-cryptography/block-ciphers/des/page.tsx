@@ -110,8 +110,16 @@ export default function DESCipherPage() {
                 className="flex flex-col"
                 animate={{gap: animationStep > 2 ? "48px" : "0px"}}
               >
-                <ExpansionAnimation content={permutedBlock.slice(0,32)} isExpanded={false} isAnimating={false} />
-                <ExpansionAnimation content={permutedBlock.slice(32,64)} isExpanded={animationStep >= 4} isAnimating={false} />
+                <ExpansionAnimation
+                  content={permutedBlock.slice(0,32)}
+                  isExpanded={false}
+                  isAnimating={false}
+                />
+                <ExpansionAnimation
+                  content={permutedBlock.slice(32,64)}
+                  isExpanded={animationStep >= 4}
+                  isAnimating={animationStep >= 5}
+                />
               </motion.div>
           }
         </div>
