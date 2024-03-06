@@ -28,14 +28,18 @@ export default function Navbar(props: NavbarProps) {
       <ul>
         <NavItem name="Symmetric Cryptography" href="">
           <NavItem name="Block Ciphers" href="">
-            <NavItem name="DES" href="/symmetric-cryptography/block-ciphers/des" />
+            <NavItem name="DES" href="/symmetric-cryptography/block-ciphers/des/structure" >
+              <NavItem name="Feistel Structure" href="/symmetric-cryptography/block-ciphers/des/structure" />
+              <NavItem name="Feistel Function" href="/symmetric-cryptography/block-ciphers/des/function" />
+              <NavItem name="Key Schedule" href="/symmetric-cryptography/block-ciphers/des/key-schedule" />
+            </NavItem>
             <NavItem name="Modes of Operation" href="">
               <NavItem name="ECB" href="/symmetric-cryptography/block-ciphers/modes/ecb"/>
-              <NavItem name="CBC" href=""/>
-              <NavItem name="CTR" href=""/>
-              <NavItem name="GCM" href=""/>
-              <NavItem name="PCBC" href=""/>
-              <NavItem name="OFB" href=""/>
+              <NavItem name="CBC" href="/symmetric-cryptography/block-ciphers/modes/cbc"/>
+              <NavItem name="CTR" href="/symmetric-cryptography/block-ciphers/modes/ctr"/>
+              <NavItem name="GCM" href="/symmetric-cryptography/block-ciphers/modes/gcm"/>
+              <NavItem name="PCBC" href="/symmetric-cryptography/block-ciphers/modes/pcbc"/>
+              <NavItem name="OFB" href="/symmetric-cryptography/block-ciphers/modes/ofb"/>
             </NavItem>
           </NavItem>
         </NavItem>
