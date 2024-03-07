@@ -1,59 +1,50 @@
 "use client"
 
-import AnimationStageDisplay from "@/Components/des-animations/AnimationStageDisplay";
 import PermutationAnimation from "@/Components/des-animations/PermutationAnimation";
-import ExpansionAnimation from "@/Components/des-animations/ExpansionAnimation";
 import FlowControl from "@/Components/FlowControl";
 import {useState} from "react";
 import {motion} from "framer-motion";
 
 export default function DESCipherPage() {
   const [animationStep, setAnimationStep] = useState(0);
+  const [animationInProgress, setAnimationInProgress] = useState(false);
   const [input, setInput] = useState('1001101011111011110100100110100011001010100101001000101100111101');
-  const [animationInput, setAnimationInput] = useState('')
   const [block, setBlock] = useState('');
+  const [paddedBlock, setPaddedBlock] = useState('');
   const [permutedBlock, setPermutedBlock] = useState('');
 
+  // calculate all blocks to be used in the animation
   const startAnimation = () => {
     setAnimationStep(0);
-    setAnimationInput(input);
-    setBlock(input);
+    setAnimationInProgress(true);
+    setBlock(input)
+
+    let padBlock = input.padEnd(64, '0')
+    setPaddedBlock(padBlock)
+
+    // calculate permuted block
+    let permutedBlock = ''
+    for (let i = 57; i <= 63; i += 2) {
+      for (let j = 0; j < 8; j++) {
+        permutedBlock += padBlock.charAt(i - j * 8)
+      }
+    }
+    for (let i = 56; i <= 62; i += 2) {
+      for (let j = 0; j < 8; j++) {
+        permutedBlock += padBlock.charAt(i - j * 8)
+      }
+    }
+    setPermutedBlock(permutedBlock);
   }
 
   const stepForward = () => {
+    // TODO: prevent animation from stepping too far
     setAnimationStep(animationStep + 1)
-
-    switch (animationStep) {
-      case 0:
-        // TODO: Change padding to actual padding algorithm
-        setBlock(animationInput.padEnd(64, '0'))
-        break;
-      case 2:
-        // calculate permuted block
-        let pBlock = ''
-        for (let i = 57; i <= 63; i += 2) {
-          for (let j = 0; j < 8; j++) {
-            pBlock += block.charAt(i - j * 8)
-          }
-        }
-        for (let i = 56; i <= 62; i += 2) {
-          for (let j = 0; j < 8; j++) {
-            pBlock += block.charAt(i - j * 8)
-          }
-        }
-        setPermutedBlock(pBlock);
-        break;
-    }
   }
 
   const stepBackward = () => {
     if (animationStep == 0) return;
-
     setAnimationStep(animationStep - 1)
-
-    switch (animationStep) {
-
-    }
   }
 
   const IPTransform = [
@@ -80,28 +71,33 @@ export default function DESCipherPage() {
 
   return (
     <>
-      <section className="w-full flex flex-col sm:w-1/3">
+      <section className="w-full flex flex-col gap-2 sm:w-1/3">
         <textarea
-          className="border border-black resize-none"
+          className="boxed resize-none"
           value={input}
           onChange={e => setInput(e.target.value)}
           maxLength={64}
         />
 
-        <button
-          className="border my-2 border-black"
-          onClick={startAnimation}
-        >
-          Start Encryption
-        </button>
+        <div className="w-full flex gap-2 justify-center">
+          <button className="border border-black rounded grow" onClick={startAnimation} >
+            Start Animation
+          </button>
+          <FlowControl
+            animationStep={animationStep}
+            animationInProgress={animationInProgress}
+            stepForward={stepForward}
+            stepBackward={stepBackward}
+          />
+        </div>
+
 
         {/*Animation Section*/}
         <div className="flex flex-col items-center">
-          <h1>Block</h1>
           {
             animationStep <= 2 ?
               <PermutationAnimation
-                content={block}
+                content={animationStep >= 1 ? paddedBlock : block}
                 transformation={IPTransform}
                 isAnimating={animationStep >= 2}
               />
@@ -110,30 +106,18 @@ export default function DESCipherPage() {
                 className="flex flex-col"
                 animate={{gap: animationStep > 2 ? "48px" : "0px"}}
               >
-                <ExpansionAnimation
-                  content={permutedBlock.slice(0,32)}
-                  isExpanded={false}
-                  isAnimating={false}
-                />
-                <ExpansionAnimation
-                  content={permutedBlock.slice(32,64)}
-                  isExpanded={animationStep >= 4}
-                  isAnimating={animationStep >= 5}
-                />
+                <div className="grid grid-cols-8 border border-black text-center font-mono">
+                  {permutedBlock.slice(0,32).split('').map((b, k) =>
+                    <div key={k} className="w-6 h-6 border border-black" >{b}</div>
+                  )}
+                </div>
+                <div className="grid grid-cols-8 border border-black text-center font-mono">
+                  {permutedBlock.slice(32, 64).split('').map((b, k) =>
+                    <div key={k} className="w-6 h-6 border border-black" >{b}</div>
+                  )}
+                </div>
               </motion.div>
           }
-        </div>
-
-        {/* Animation Stage indicator*/}
-        {/* TODO: Restyle display to be below animation*/}
-        <AnimationStageDisplay animationStep={animationStep} />
-
-        <div className="flex justify-center">
-          <FlowControl
-            animationStep={animationStep}
-            stepForward={stepForward}
-            stepBackward={stepBackward}
-          />
         </div>
       </section>
     </>
