@@ -11,7 +11,7 @@ export default function Navbar(props: NavbarProps) {
   // TODO: make close navbar when clicking link
   return (
     <motion.nav
-      className="absolute top-0 left-0 z-10 w-full h-full px-2 py-1 bg-white sm:static sm:shrink-0 sm:w-64"
+      className="absolute top-0 left-0 z-10 w-full h-full px-2 py-1 bg-white lg:static lg:shrink-0 lg:w-64"
       variants={{
         open: {
           x: 0,
