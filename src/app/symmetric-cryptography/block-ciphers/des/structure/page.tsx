@@ -1,5 +1,6 @@
 "use client"
 
+import AnimationContainer from "@/Components/AnimationContainer";
 import PermutationAnimation from "@/Components/des-animations/PermutationAnimation";
 import FlowControl from "@/Components/FlowControl";
 import {useState} from "react";
@@ -71,7 +72,7 @@ export default function DESCipherPage() {
 
   return (
     <section className="w-full flex flex-col sm:block">
-      <figure className="w-full mx-auto max-w-96 flex flex-col gap-2 sm:mx-0 sm:float-left">
+      <AnimationContainer>
         <textarea
           className="boxed resize-none"
           value={input}
@@ -135,7 +136,7 @@ export default function DESCipherPage() {
             {/*</AnimatePresence>*/}
           </div>
         </div>
-      </figure>
+      </AnimationContainer>
 
       <p>
         Supporting Text
