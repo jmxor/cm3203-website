@@ -1,5 +1,6 @@
 "use client"
 
+import AnimationCarousel from "@/Components/AnimationCarousel";
 import AnimationContainer from "@/Components/AnimationContainer";
 import AnimationInput from "@/Components/AnimationInput";
 import AnimationFlowControl from "@/Components/AnimationFlowControl";
@@ -29,28 +30,20 @@ export default function ECBModePage() {
           stepBackward={() => setAnimationStep(animationStep - 1)}
         />
 
-        <div className="w-full overflow-clip border border-transparent">
-          <motion.div
-            className="flex"
-            animate={{x: Math.floor(animationStep / stepsPerBlock) * -100 + "%"}}
-            transition={{ease: "easeInOut"}}
-          >
-            {
-              Array(Math.ceil(input.length / 8) || 1).fill(null).map((_, k) =>
-                <ECBSection
-                  key={k}
-                  index={k}
-                  content={input.slice(k * 8, k * 8 + 8)}
-                  animationStep={animationStep}
-                  stepsPerBlock={stepsPerBlock}
-                />
-              )
-            }
-          </motion.div>
-        </div>
+        <AnimationCarousel currentIndex={Math.floor(animationStep / stepsPerBlock)}>
+          {Array(Math.ceil(input.length / 8) || 1).fill(null).map((_, k) =>
+            <ECBSection
+              key={k}
+              index={k}
+              content={input.slice(k * 8, k * 8 + 8)}
+              animationStep={animationStep}
+              stepsPerBlock={stepsPerBlock}
+            />
+          )}
+        </AnimationCarousel>
 
         <textarea
-          className="w-full boxed"
+          className="w-full boxed font-mono"
           value={input.slice(0, Math.floor((animationStep + 1) / stepsPerBlock) * 8)}
           onChange={undefined}
           readOnly
@@ -71,14 +64,11 @@ function ECBSection(props: ECBSectionProps) {
   const {content, animationStep, stepsPerBlock, index} = props;
   const currentBlock = Math.floor(animationStep / stepsPerBlock) == index;
   return (
-    <div className="flex w-full justify-center shrink-0">
+    <div className="flex gap-6 w-full justify-center shrink-0">
         <div className="flex flex-col justify-center">
-          <div className="flex">
-            <div className="w-12 h-6 border-2 border-black text-center">Key</div>
-            →
-          </div>
+          <div className="w-16 h-6 border-2 border-black text-center align-middle">Key</div>
         </div>
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col gap-6 items-center justify-center">
           <div className="relative">
             <div className="flex border border-black">
               {Array(8).fill(null).map(
@@ -95,13 +85,9 @@ function ECBSection(props: ECBSectionProps) {
             </motion.div>
           </div>
 
-          <div>↓</div>
-
-          <div className="w-48 h-16 flex items-center border-2 border-black font-mono">
+          <div className="w-[194px] h-16 flex items-center border-2 border-black font-mono">
             <span className="text-center">Block Cipher Function</span>
           </div>
-
-          <div>↓</div>
 
           <div className="relative">
             <div className="flex border border-black">
