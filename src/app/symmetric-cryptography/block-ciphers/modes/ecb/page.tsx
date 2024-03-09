@@ -1,7 +1,8 @@
 "use client"
 
+import AnimationContainer from "@/Components/AnimationContainer";
 import AnimationInput from "@/Components/AnimationInput";
-import FlowControl from "@/Components/FlowControl";
+import AnimationFlowControl from "@/Components/AnimationFlowControl";
 import {useState} from "react";
 import {motion} from "framer-motion";
 
@@ -11,48 +12,50 @@ export default function ECBModePage() {
   const stepsPerBlock = 4;
 
   return (
-    <section className="w-full flex flex-col items-center sm:w-1/3">
-     <AnimationInput
-       value={input}
-       onChange={e => setInput(e.target.value)}
-       highlightStart={Math.floor(animationStep / stepsPerBlock) * 8}
-       highlightEnd={Math.floor(animationStep / stepsPerBlock) * 8 + 8}
-     />
+    <section className="w-full flex flex-col sm:block">
+      <AnimationContainer>
 
-      <br/>
+        <AnimationInput
+         value={input}
+         onChange={e => setInput(e.target.value)}
+         highlightStart={Math.floor(animationStep / stepsPerBlock) * 8}
+         highlightEnd={Math.floor(animationStep / stepsPerBlock) * 8 + 8}
+        />
 
-      <div className="w-full overflow-clip border border-transparent">
-        <motion.div
-          className="flex"
-          animate={{x: Math.floor(animationStep / stepsPerBlock) * -100 + "%"}}
-          transition={{ease: "easeInOut"}}
-        >
-          {
-            Array(Math.ceil(input.length / 8) || 1).fill(null).map((_, k) =>
-              <ECBSection
-                key={k}
-                index={k}
-                content={input.slice(k * 8, k * 8 + 8)}
-                animationStep={animationStep}
-                stepsPerBlock={stepsPerBlock}
-              />
-            )
-          }
-        </motion.div>
-      </div>
+        <AnimationFlowControl
+          animationStep={animationStep}
+          startAnimation={() => {}}
+          stepForward={() => setAnimationStep(animationStep + 1)}
+          stepBackward={() => setAnimationStep(animationStep - 1)}
+        />
 
-      <FlowControl
-        animationStep={animationStep}
-        stepForward={() => setAnimationStep(animationStep + 1)}
-        stepBackward={() => setAnimationStep(animationStep - 1)} />
+        <div className="w-full overflow-clip border border-transparent">
+          <motion.div
+            className="flex"
+            animate={{x: Math.floor(animationStep / stepsPerBlock) * -100 + "%"}}
+            transition={{ease: "easeInOut"}}
+          >
+            {
+              Array(Math.ceil(input.length / 8) || 1).fill(null).map((_, k) =>
+                <ECBSection
+                  key={k}
+                  index={k}
+                  content={input.slice(k * 8, k * 8 + 8)}
+                  animationStep={animationStep}
+                  stepsPerBlock={stepsPerBlock}
+                />
+              )
+            }
+          </motion.div>
+        </div>
 
-      <textarea
-        className="w-full boxed"
-        value={input.slice(0, Math.floor((animationStep + 1) / stepsPerBlock) * 8)}
-        onChange={undefined}
-        readOnly
-      />
-
+        <textarea
+          className="w-full boxed"
+          value={input.slice(0, Math.floor((animationStep + 1) / stepsPerBlock) * 8)}
+          onChange={undefined}
+          readOnly
+        />
+      </AnimationContainer>
     </section>
   )
 }

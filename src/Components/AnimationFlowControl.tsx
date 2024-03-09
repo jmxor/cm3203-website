@@ -1,19 +1,22 @@
+import {useState} from "react";
+
 interface FlowControlProps {
   animationStep: number,
-  animationInProgress: boolean,
   startAnimation: () => void,
   stepForward: () => void,
   stepBackward: () => void;
 }
 
-export default function FlowControl(props: FlowControlProps) {
-  const {animationStep, animationInProgress, startAnimation, stepForward, stepBackward} = props;
+export default function AnimationFlowControl(props: FlowControlProps) {
+  const {animationStep, startAnimation, stepForward, stepBackward} = props;
+
+  const [animationInProgress, setAnimationInProgress] = useState(false);
 
   // TODO: add proper flow control icons
   // TODO: add disabled styling for buttons
   return (
     <div className="w-full flex gap-2 justify-center">
-      <button className="border border-black rounded grow" onClick={startAnimation} >
+      <button className="border border-black rounded grow" onClick={() => {startAnimation(); setAnimationInProgress(true)}} >
         Start Animation
       </button>
       <div className="flex border border-black rounded">

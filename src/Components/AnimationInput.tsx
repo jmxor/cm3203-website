@@ -17,6 +17,8 @@ export default function AnimationInput(props: AnimationInputProps) {
     textareaRef.current!.style.height = scrollHeight + 2 + "px"
   }, [textareaRef, value]);
 
+  // TODO: remove random extra bottom padding
+
   return (
     <div className="relative w-full">
       <textarea

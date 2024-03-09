@@ -2,13 +2,12 @@
 
 import AnimationContainer from "@/Components/AnimationContainer";
 import PermutationAnimation from "@/Components/des-animations/PermutationAnimation";
-import FlowControl from "@/Components/FlowControl";
+import AnimationFlowControl from "@/Components/AnimationFlowControl";
 import {useState} from "react";
 import {AnimatePresence, motion} from "framer-motion";
 
 export default function DESCipherPage() {
   const [animationStep, setAnimationStep] = useState(0);
-  const [animationInProgress, setAnimationInProgress] = useState(false);
   const [input, setInput] = useState('1001101011111011110100100110100011001010100101001000101100111101');
   const [block, setBlock] = useState('');
   const [paddedBlock, setPaddedBlock] = useState('');
@@ -17,7 +16,6 @@ export default function DESCipherPage() {
   // calculate all blocks to be used in the animation
   const startAnimation = () => {
     setAnimationStep(0);
-    setAnimationInProgress(true);
     setBlock(input)
 
     let padBlock = input.padEnd(64, '0')
@@ -80,9 +78,8 @@ export default function DESCipherPage() {
           maxLength={64}
         />
 
-        <FlowControl
+        <AnimationFlowControl
           animationStep={animationStep}
-          animationInProgress={animationInProgress}
           startAnimation={startAnimation}
           stepForward={stepForward}
           stepBackward={stepBackward}
@@ -122,15 +119,13 @@ export default function DESCipherPage() {
                       )}
                     </div>
                   </motion.div>
-                  <div className="flex flex-col justify-center">
-                    <motion.div
-                      className="w-24 border-2 border-black text-center font-mono"
-                      animate={{opacity: animationStep < 4 ? 0 : 1}}
-                      initial={false}
-                    >
-                      Feistel Function
-                    </motion.div>
-                  </div>
+                  <motion.div
+                    className="w-24 my-auto border-2 border-black text-center font-mono"
+                    animate={{opacity: animationStep < 4 ? 0 : 1}}
+                    initial={false}
+                  >
+                    Feistel Function
+                  </motion.div>
                 </motion.div>
               }
             {/*</AnimatePresence>*/}

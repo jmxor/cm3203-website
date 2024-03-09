@@ -1,17 +1,16 @@
 "use client"
 
+import AnimationContainer from "@/Components/AnimationContainer";
 import ExpansionAnimation from "@/Components/des-animations/ExpansionAnimation";
-import FlowControl from "@/Components/FlowControl";
+import AnimationFlowControl from "@/Components/AnimationFlowControl";
 import {useState} from "react";
 
 export default function DESFunctionPage() {
   const [animationStep, setAnimationStep] = useState(0);
-  const [animationInProgress, setAnimationInProgress] = useState(false);
   const [input, setInput] = useState('');
 
   function startAnimation() {
     setAnimationStep(0);
-    setAnimationInProgress(true)
   }
 
   function stepForward() {
@@ -20,12 +19,12 @@ export default function DESFunctionPage() {
 
   function stepBackward() {
     if (animationStep == 0) return;
-    setAnimationStep(animationStep + 1)
+    setAnimationStep(animationStep - 1)
   }
 
   return (
-    <>
-      <section className="w-full flex flex-col sm:w-1/3">
+    <section className="w-full flex flex-col sm:block">
+      <AnimationContainer>
         <textarea
           className="boxed resize-none"
           placeholder="00101001 ..."
@@ -34,17 +33,12 @@ export default function DESFunctionPage() {
           maxLength={32}
         />
 
-        <div className="w-full flex gap-2 justify-center">
-          <button className="border border-black rounded grow" onClick={startAnimation} >
-            Start Animation
-          </button>
-          <FlowControl
-            animationStep={animationStep}
-            animationInProgress={animationInProgress}
-            stepForward={stepForward}
-            stepBackward={stepBackward}
-          />
-        </div>
+        <AnimationFlowControl
+          animationStep={animationStep}
+          startAnimation={startAnimation}
+          stepForward={stepForward}
+          stepBackward={stepBackward}
+        />
 
         {/* Animation Section */}
         <ExpansionAnimation
@@ -52,7 +46,7 @@ export default function DESFunctionPage() {
           isExpanded={animationStep >= 1}
           isAnimating={animationStep >= 2}
         />
-      </section>
-    </>
+      </AnimationContainer>
+    </section>
   )
 }
