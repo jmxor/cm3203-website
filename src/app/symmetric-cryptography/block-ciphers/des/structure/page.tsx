@@ -70,8 +70,8 @@ export default function DESCipherPage() {
   ];
 
   return (
-    <>
-      <section className="w-full flex flex-col gap-2 sm:w-1/2 xl:w-1/3">
+    <section className="w-full flex flex-col sm:block">
+      <figure className="w-full mx-auto max-w-96 flex flex-col gap-2 sm:mx-0 sm:float-left">
         <textarea
           className="boxed resize-none"
           value={input}
@@ -79,56 +79,67 @@ export default function DESCipherPage() {
           maxLength={64}
         />
 
-        <div className="w-full flex gap-2 justify-center">
-          <button className="border border-black rounded grow" onClick={startAnimation} >
-            Start Animation
-          </button>
-          <FlowControl
-            animationStep={animationStep}
-            animationInProgress={animationInProgress}
-            stepForward={stepForward}
-            stepBackward={stepBackward}
+        <FlowControl
+          animationStep={animationStep}
+          animationInProgress={animationInProgress}
+          startAnimation={startAnimation}
+          stepForward={stepForward}
+          stepBackward={stepBackward}
+        />
+
+        <div className="relative flex flex-col">
+          <motion.div
+            className="absolute top-0 left-0 w-full h-full bg-[url('../../public/des-structure-bg-0.svg')]"
+            animate={{opacity: animationStep < 4 ? 0 : 1}}
+            initial={false}
           />
-        </div>
-
-
-        {/*Animation Section*/}
-        <div className="flex flex-col bg-center bg-[size:100%_100%] bg-no-repeat bg-[url('../../public/des-structure-bg-0.svg')]">
           <div className="ml-6 mr-auto">
-              {
-                animationStep <= 2 ?
-                  <PermutationAnimation
-                    content={animationStep >= 1 ? paddedBlock : block}
-                    transformation={IPTransform}
-                    isAnimating={animationStep >= 2}
-                  />
-                  :
-                  <div className="flex">
-                    <motion.div
-                      className="flex flex-col"
-                      animate={{gap: animationStep > 2 ? "96px" : "0px"}}
-                    >
-                      <div className="grid grid-cols-8 bg-white border border-black text-center font-mono">
-                        {permutedBlock.slice(0,32).split('').map((b, k) =>
-                          <div key={k} className="w-6 h-6 border border-black" >{b}</div>
-                        )}
-                      </div>
-                      <div className="grid grid-cols-8 bg-white border border-black text-center font-mono">
-                        {permutedBlock.slice(32, 64).split('').map((b, k) =>
-                          <div key={k} className="w-6 h-6 border border-black">{b}</div>
-                        )}
-                      </div>
-                    </motion.div>
-                    <div className="flex flex-col justify-center">
-                      <div className="w-24 ml-3.5 border-2 border-black text-center font-mono">
-                        Feistel Function
-                      </div>
+            {/*<AnimatePresence>*/}
+            {/* TODO: fix reverse animation jumping using AnimatePresence*/}
+              {animationStep <= 2 ?
+                <PermutationAnimation
+                  key={0}
+                  content={animationStep >= 1 ? paddedBlock : block}
+                  transformation={IPTransform}
+                  isAnimating={animationStep >= 2}
+                />
+                :
+                <motion.div key={1} className="flex">
+                  <motion.div
+                    className="flex flex-col"
+                    animate={{gap: animationStep > 2 ? "96px" : "0px"}}
+                    exit={{gap: "0px"}}
+                  >
+                    <div className="grid grid-cols-8 bg-white border border-black text-center font-mono">
+                      {permutedBlock.slice(0,32).split('').map((b, k) =>
+                        <div key={k} className="w-6 h-6 border border-black" >{b}</div>
+                      )}
                     </div>
+                    <div className="grid grid-cols-8 bg-white border border-black text-center font-mono">
+                      {permutedBlock.slice(32, 64).split('').map((b, k) =>
+                        <div key={k} className="w-6 h-6 border border-black">{b}</div>
+                      )}
+                    </div>
+                  </motion.div>
+                  <div className="flex flex-col justify-center">
+                    <motion.div
+                      className="w-24 border-2 border-black text-center font-mono"
+                      animate={{opacity: animationStep < 4 ? 0 : 1}}
+                      initial={false}
+                    >
+                      Feistel Function
+                    </motion.div>
                   </div>
+                </motion.div>
               }
+            {/*</AnimatePresence>*/}
           </div>
         </div>
-      </section>
-    </>
+      </figure>
+
+      <p>
+        Supporting Text
+      </p>
+    </section>
   )
 }

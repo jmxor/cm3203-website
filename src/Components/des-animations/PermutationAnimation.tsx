@@ -1,16 +1,17 @@
 import {motion} from "framer-motion";
 
 interface BitGridProps {
+  key: number
   content: string,
   transformation: number[],
   isAnimating: boolean
 }
 
 export default function PermutationAnimation(props: BitGridProps) {
-  const {content, transformation, isAnimating} = props;
+  const {key, content, transformation, isAnimating} = props;
 
   return (
-    <div className="relative text-center">
+    <motion.div key={key} className="relative text-center">
       {/* Grid */}
       <div className="grid grid-cols-8 border border-black">
         {Array(64).fill(null).map((_, k) => (
@@ -35,6 +36,6 @@ export default function PermutationAnimation(props: BitGridProps) {
           </motion.div>
         ))}
       </div>
-    </div>
+    </motion.div>
   )
 }
