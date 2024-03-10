@@ -3,12 +3,13 @@ import {ChangeEvent, useEffect, useRef} from "react";
 interface AnimationInputProps {
   value: string,
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void,
+  placeholder: string,
   highlightStart: number,
   highlightEnd: number,
 }
 
 export default function AnimationInput(props: AnimationInputProps) {
-  const {value, onChange, highlightStart, highlightEnd} = props;
+  const {value, onChange, placeholder, highlightStart, highlightEnd} = props;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -26,6 +27,7 @@ export default function AnimationInput(props: AnimationInputProps) {
         ref={textareaRef}
         value={value}
         onChange={onChange}
+        placeholder={placeholder}
       />
       <div className="absolute top-0 left-0 overflow-auto -z-10">
         <div className="w-full px-1 text-transparent font-mono break-all">
