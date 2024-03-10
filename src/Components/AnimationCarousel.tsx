@@ -9,7 +9,7 @@ export default function AnimationCarousel(props: PropsWithChildren<AnimationCaro
   const {currentIndex, children} = props;
 
   return (
-    <div className="w-full overflow-clip border border-transparent">
+    <div className="w-full overflow-clip">
       <motion.div
         className="flex"
         animate={{x: currentIndex * -100 + "%"}}
