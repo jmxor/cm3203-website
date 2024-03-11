@@ -4,6 +4,7 @@ import AnimationCarousel from "@/Components/AnimationCarousel";
 import AnimationContainer from "@/Components/AnimationContainer";
 import AnimationInput from "@/Components/AnimationInput";
 import AnimationFlowControl from "@/Components/AnimationFlowControl";
+import BitBox8x1 from "@/Components/BitBox8x1";
 import {useState} from "react";
 import {motion} from "framer-motion";
 
@@ -42,7 +43,6 @@ export default function ECBModePage() {
   return (
     <section className="w-full flex flex-col sm:block">
       <AnimationContainer>
-
         <AnimationInput
          value={plaintextInput}
          onChange={e => setPlaintextInput(e.target.value)}
@@ -105,46 +105,24 @@ function ECBSection(props: ECBSectionProps) {
   const currentBlock = Math.floor(animationStep / stepsPerBlock) == index;
 
   return (
-    <div className="flex gap-6 w-full justify-center shrink-0 bg-[url('../../public/ecb-bg.svg')]">
-      <div className="flex flex-col justify-center">
-        <div className="w-16 h-6 border-2 border-black text-center align-middle">Key</div>
-      </div>
-      <div className="flex flex-col gap-6 items-center justify-center">
-        <div className="relative">
-          <div className="flex border border-black">
-            {Array(8).fill(null).map(
-              (c, k) => <div key={k} className="w-6 h-6 border border-black"/>
-            )}
-          </div>
-          <motion.div
-            className="absolute top-0 left-0 flex border border-transparent"
-            animate={{opacity: (currentBlock && animationStep % stepsPerBlock == 0) ? 1 : 0}}
-          >
-            {plaintextBlock.split('').map(
-              (c, k) => <div key={k} className="w-6 h-6 text-center font-mono">{c}</div>
-            )}
-          </motion.div>
-        </div>
+    <div className="relative w-full bg-[url('../../public/ecb-bg.svg')]">
 
-        <div className="w-[194px] h-16 flex items-center border-2 border-black font-mono">
+      <div className="absolute top-[69px] left-[52px] w-16 h-6 border-2 border-black text-center align-middle">Key</div>
+
+      <div className="flex flex-col items-center justify-center ml-[88px]">
+        <BitBox8x1
+          content={plaintextBlock}
+          contentVisible={currentBlock && animationStep % stepsPerBlock == 0}
+        />
+
+        <div className="w-[194px] h-16 my-6 flex items-center border-2 border-black font-mono">
           <span className="text-center">Block Cipher Function</span>
         </div>
 
-        <div className="relative">
-          <div className="flex border border-black">
-            {Array(8).fill(null).map(
-              (c, k) => <div key={k} className="w-6 h-6 border border-black"/>
-            )}
-          </div>
-          <motion.div
-            className="absolute top-0 left-0 flex border border-transparent"
-            animate={{opacity: (currentBlock && animationStep % stepsPerBlock == 1) ? 1 : 0}}
-          >
-            {ciphertextBlock.split('').map(
-              (c, k) => <div key={k} className="w-6 h-6 text-center font-mono">{c}</div>
-            )}
-          </motion.div>
-        </div>
+        <BitBox8x1
+          content={ciphertextBlock}
+          contentVisible={currentBlock && animationStep % stepsPerBlock == 1}
+        />
       </div>
     </div>
   )
