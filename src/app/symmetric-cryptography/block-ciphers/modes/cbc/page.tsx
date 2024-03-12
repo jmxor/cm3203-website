@@ -5,15 +5,18 @@ import AnimationContainer from "@/Components/AnimationContainer";
 import AnimationInput from "@/Components/AnimationInput";
 import AnimationFlowControl from "@/Components/AnimationFlowControl";
 import BitBox8x1 from "@/Components/BitBox8x1";
+import stringXOR from "@/functions/stringXOR";
 import {useState} from "react";
 import {motion} from "framer-motion";
 
 export default function CBCModePage() {
   const [plaintextInput, setPlaintextInput] = useState('');
   const [keyInput, setKeyInput] = useState('');
+  const [IVInput, setIVInput] = useState('');
 
   const [animationStep, setAnimationStep] = useState(0);
   const [encryptionKey, setEncryptionKey] = useState('')
+  const [initialisationVector, setInitialisationVector] = useState('');
   const [plaintext, setPlaintext] = useState('')
   const [cipherText, setCipherText] = useState('');
   const stepsPerBlock = 3;
@@ -22,10 +25,16 @@ export default function CBCModePage() {
     setAnimationStep(0);
     setPlaintext(plaintextInput);
     setEncryptionKey(keyInput);
+    setInitialisationVector(IVInput);
 
     let ciphertext = ''
     for (let i = 0; i < plaintextInput.length; i++) {
-      ciphertext += (plaintextInput.charAt(i) != keyInput.charAt(i % 8)) ? '1' : '0'
+      let temp = stringXOR(plaintextInput[i], keyInput[i % 8])
+      if (i < 8) {
+        ciphertext += stringXOR(temp, IVInput[i])
+      } else {
+        ciphertext += stringXOR(temp, ciphertext[i-8])
+      }
     }
     setCipherText(ciphertext)
   }
@@ -59,6 +68,14 @@ export default function CBCModePage() {
           maxLength={8}
         />
 
+        <input
+          className="boxed font-mono"
+          value={IVInput}
+          onChange={e => setIVInput(e.target.value)}
+          placeholder="8-Bit Initialisation Vector"
+          maxLength={8}
+        />
+
         <AnimationFlowControl
           animationStep={animationStep}
           startAnimation={startAnimation}
@@ -74,6 +91,7 @@ export default function CBCModePage() {
               plaintextBlock={plaintext.slice(k * 8, k * 8 + 8)}
               ciphertextBlock={cipherText.slice(k * 8, k * 8 + 8)}
               encryptionKey={encryptionKey}
+              initialisationVector={k==0 ? initialisationVector : cipherText.slice((k-1) * 8, (k-1) * 8 + 8)}
               animationStep={animationStep}
               stepsPerBlock={stepsPerBlock}
             />
@@ -96,27 +114,28 @@ interface CBCSectionProps {
   plaintextBlock: string
   ciphertextBlock: string
   encryptionKey: string
+  initialisationVector:string;
   animationStep: number
   stepsPerBlock: number
 }
 
 function CBCSection(props: CBCSectionProps) {
-  const {plaintextBlock, ciphertextBlock, encryptionKey, animationStep, stepsPerBlock, index} = props;
+  const {plaintextBlock, ciphertextBlock, encryptionKey, initialisationVector, animationStep, stepsPerBlock, index} = props;
   const currentBlock = Math.floor(animationStep / stepsPerBlock) == index;
 
   return (
-    <div className="relative w-full bg-[url('../../public/cbc-bg.svg')]">
+    <div className="relative w-full shrink-0 bg-[url('../../public/cbc-bg.svg')]">
 
       <div className="absolute top-[118px] left-[48px] w-16 h-6 border-2 border-black text-center align-middle">Key</div>
 
       <div className="absolute top-12">
-        <BitBox8x1 content={'00110011'} contentVisible={true} />
+        <BitBox8x1 content={initialisationVector} contentVisible={true} />
       </div>
 
       <div className="flex flex-col items-center justify-center ml-20">
         <BitBox8x1
           content={plaintextBlock}
-          contentVisible={currentBlock && animationStep % stepsPerBlock == 0}
+          contentVisible={currentBlock && animationStep % stepsPerBlock >= 0}
         />
 
         <div className="w-[194px] h-16 mt-[72px] mb-12 flex items-center border-2 border-black font-mono">
@@ -125,7 +144,7 @@ function CBCSection(props: CBCSectionProps) {
 
         <BitBox8x1
           content={ciphertextBlock}
-          contentVisible={currentBlock && animationStep % stepsPerBlock == 1}
+          contentVisible={currentBlock && animationStep % stepsPerBlock >= 1}
         />
       </div>
     </div>

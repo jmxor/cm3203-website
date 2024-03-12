@@ -105,7 +105,7 @@ function ECBSection(props: ECBSectionProps) {
   const currentBlock = Math.floor(animationStep / stepsPerBlock) == index;
 
   return (
-    <div className="relative w-full bg-[url('../../public/ecb-bg.svg')]">
+    <div className="relative w-full shrink-0 bg-[url('../../public/ecb-bg.svg')]">
 
       <div className="absolute top-[69px] left-[52px] w-16 h-6 border-2 border-black text-center align-middle">Key</div>
 
