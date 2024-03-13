@@ -7,7 +7,6 @@ import AnimationFlowControl from "@/Components/AnimationFlowControl";
 import BitBox8x1 from "@/Components/BitBox8x1";
 import stringXOR from "@/functions/stringXOR";
 import {useState} from "react";
-import {motion} from "framer-motion";
 
 export default function CBCModePage() {
   const [plaintextInput, setPlaintextInput] = useState('');
@@ -126,7 +125,7 @@ function CBCSection(props: CBCSectionProps) {
   return (
     <div className="relative w-full shrink-0 bg-[url('../../public/cbc-bg.svg')]">
 
-      <div className="absolute top-[118px] left-[48px] w-16 h-6 border-2 border-black text-center align-middle">Key</div>
+      <div className="absolute top-[117px] left-[48px] w-16 h-[26px] border-2 border-black text-center align-middle font-mono">Key</div>
 
       <div className="absolute top-12">
         <BitBox8x1 content={initialisationVector} contentVisible={true} />

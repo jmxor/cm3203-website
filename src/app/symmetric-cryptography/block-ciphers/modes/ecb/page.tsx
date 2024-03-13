@@ -6,7 +6,6 @@ import AnimationInput from "@/Components/AnimationInput";
 import AnimationFlowControl from "@/Components/AnimationFlowControl";
 import BitBox8x1 from "@/Components/BitBox8x1";
 import {useState} from "react";
-import {motion} from "framer-motion";
 
 export default function ECBModePage() {
   const [plaintextInput, setPlaintextInput] = useState('');
@@ -107,7 +106,7 @@ function ECBSection(props: ECBSectionProps) {
   return (
     <div className="relative w-full shrink-0 bg-[url('../../public/ecb-bg.svg')]">
 
-      <div className="absolute top-[69px] left-[52px] w-16 h-6 border-2 border-black text-center align-middle">Key</div>
+      <div className="absolute top-[69px] left-[52px] w-16 h-[26px] border-2 border-black text-center align-middle font-mono">Key</div>
 
       <div className="flex flex-col items-center justify-center ml-[88px]">
         <BitBox8x1
