@@ -127,14 +127,15 @@ interface DESStructureSectionProps {
 }
 
 function DESStructureSection(props: DESStructureSectionProps) {
-  const {permutedBlock, animationStep} = props;
+  const {index, permutedBlock, animationStep} = props;
   return (
-    <motion.div className="flex w-full shrink-0 bg-[url('../../public/des-structure-bg-0.svg')]">
-      {/*<motion.div*/}
-      {/*  className="absolute top-0 left-0 w-full h-full bg-[url('../../public/des-structure-bg-0.svg')]"*/}
-      {/*  animate={{opacity: animationStep < 4 ? 0 : 1}}*/}
-      {/*  initial={false}*/}
-      {/*/>*/}
+    <motion.div className="relative flex w-full shrink-0">
+      {/*Background image*/}
+      <motion.div
+        className={`absolute top-0 left-0 w-full h-full ${index == 0 ? 'bg-[url(../../public/des-structure-bg-0.svg)]' : 'bg-[url(../../public/des-structure-bg-1.svg)]'}`}
+        animate={{opacity: animationStep < 4 ? 0 : 1}}
+        initial={false}
+      />
       <motion.div
         className="flex flex-col ml-6"
         animate={{gap: animationStep > 2 ? "96px" : "0px"}}
