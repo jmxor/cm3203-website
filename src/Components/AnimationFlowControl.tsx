@@ -15,7 +15,7 @@ export default function AnimationFlowControl(props: FlowControlProps) {
   // TODO: add proper flow control icons
   // TODO: add disabled styling for buttons
   return (
-    <div className="w-full flex gap-2 justify-center">
+    <div className="w-full flex gap-2 col-span-2 justify-center">
       <button className="border border-black rounded grow" onClick={() => {startAnimation(); setAnimationInProgress(true)}} >
         Start Animation
       </button>

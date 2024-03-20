@@ -2,6 +2,8 @@
 
 import AnimationCarousel from "@/Components/AnimationCarousel";
 import AnimationContainer from "@/Components/AnimationContainer";
+import AnimationInputGroup from "@/Components/AnimationInputGroup";
+import AnimationTextarea from "@/Components/AnimationTextarea";
 import PermutationAnimation from "@/Components/des-animations/PermutationAnimation";
 import AnimationFlowControl from "@/Components/AnimationFlowControl";
 import {useState} from "react";
@@ -9,7 +11,7 @@ import {AnimatePresence, motion} from "framer-motion";
 
 export default function DESCipherPage() {
   const [animationStep, setAnimationStep] = useState(0);
-  const [input, setInput] = useState('1001101011111011110100100110100011001010100101001000101100111101');
+  const [input, setInput] = useState('');
   const [block, setBlock] = useState('');
   const [paddedBlock, setPaddedBlock] = useState('');
   const [permutedBlock, setPermutedBlock] = useState('');
@@ -72,19 +74,23 @@ export default function DESCipherPage() {
   return (
     <section className="w-full flex flex-col sm:block">
       <AnimationContainer>
-        <textarea
-          className="boxed resize-none"
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          maxLength={64}
-        />
+        <AnimationInputGroup>
+          <AnimationTextarea
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            label="Plaintext Block"
+            placeholder="00101010..."
+            highlightStart={0}
+            highlightEnd={0}
+          />
 
-        <AnimationFlowControl
-          animationStep={animationStep}
-          startAnimation={startAnimation}
-          stepForward={stepForward}
-          stepBackward={stepBackward}
-        />
+          <AnimationFlowControl
+            animationStep={animationStep}
+            startAnimation={startAnimation}
+            stepForward={stepForward}
+            stepBackward={stepBackward}
+          />
+        </AnimationInputGroup>
 
         <div className="w-full flex flex-col">
             {/* TODO: fix reverse animation jumping using AnimatePresence*/}

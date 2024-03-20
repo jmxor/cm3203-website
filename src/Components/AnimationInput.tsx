@@ -1,43 +1,27 @@
-import {ChangeEvent, useEffect, useRef} from "react";
+import {ChangeEvent} from "react";
 
 interface AnimationInputProps {
-  value: string,
-  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void,
+  label: string,
   placeholder: string,
-  highlightStart: number,
-  highlightEnd: number,
+  value: string,
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void,
+  maxLength: number
 }
 
 export default function AnimationInput(props: AnimationInputProps) {
-  const {value, onChange, placeholder, highlightStart, highlightEnd} = props;
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    textareaRef.current!.style.height = "0px";
-    const scrollHeight = textareaRef.current!.scrollHeight;
-    textareaRef.current!.style.height = scrollHeight + 2 + "px"
-  }, [textareaRef, value]);
-
-  // TODO: remove random extra bottom padding
-
+  const {label, placeholder, value, onChange, maxLength} = props;
   return (
-    <div className="relative w-full">
-      <textarea
-        className="w-full px-1 bg-transparent border border-black rounded font-mono resize-none"
-        ref={textareaRef}
+    <>
+      <label className="px-1 border border-r-0 border-black rounded-l">
+          {label}
+      </label>
+      <input
+        className="px-1 border border-black rounded-r font-mono"
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        maxLength={maxLength}
       />
-      <div className="absolute top-0 left-0 overflow-auto -z-10">
-        <div className="w-full px-1 text-transparent font-mono break-all">
-          {value.slice(0, highlightStart)}
-          <mark className="rounded text-transparent">
-            {value.slice(highlightStart, highlightEnd)}
-          </mark>
-          {value.slice(highlightEnd, value.length)}
-        </div>
-      </div>
-    </div>
+    </>
   )
 }

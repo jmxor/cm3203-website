@@ -3,6 +3,8 @@
 import AnimationCarousel from "@/Components/AnimationCarousel";
 import AnimationContainer from "@/Components/AnimationContainer";
 import AnimationInput from "@/Components/AnimationInput";
+import AnimationInputGroup from "@/Components/AnimationInputGroup";
+import AnimationTextarea from "@/Components/AnimationTextarea";
 import AnimationFlowControl from "@/Components/AnimationFlowControl";
 import BitBox8x1 from "@/Components/BitBox8x1";
 import stringXOR from "@/functions/stringXOR";
@@ -51,36 +53,39 @@ export default function CBCModePage() {
   return (
     <section className="w-full flex flex-col sm:block">
       <AnimationContainer>
-        <AnimationInput
-         value={plaintextInput}
-         onChange={e => setPlaintextInput(e.target.value)}
-         placeholder="Binary Plaintext (00101011...)"
-         highlightStart={Math.floor(animationStep / stepsPerBlock) * 8}
-         highlightEnd={Math.floor(animationStep / stepsPerBlock) * 8 + 8}
-        />
+        <AnimationInputGroup>
+          <AnimationTextarea
+           value={plaintextInput}
+           onChange={e => setPlaintextInput(e.target.value)}
+           label="Plaintext"
+           placeholder="00101010..."
+           highlightStart={Math.floor(animationStep / stepsPerBlock) * 8}
+           highlightEnd={Math.floor(animationStep / stepsPerBlock) * 8 + 8}
+          />
 
-        <input
-          className="boxed font-mono"
-          value={keyInput}
-          onChange={e => setKeyInput(e.target.value)}
-          placeholder="8-Bit Key"
-          maxLength={8}
-        />
+          <AnimationInput
+            label="Key (8-bit)"
+            placeholder="01001010"
+            value={keyInput}
+            onChange={e => setKeyInput(e.target.value)}
+            maxLength={8}
+          />
 
-        <input
-          className="boxed font-mono"
-          value={IVInput}
-          onChange={e => setIVInput(e.target.value)}
-          placeholder="8-Bit Initialisation Vector"
-          maxLength={8}
-        />
+          <AnimationInput
+            label="IV (8-bit)"
+            placeholder="01010010"
+            value={IVInput}
+            onChange={e => setIVInput(e.target.value)}
+            maxLength={8}
+          />
 
-        <AnimationFlowControl
-          animationStep={animationStep}
-          startAnimation={startAnimation}
-          stepForward={stepForward}
-          stepBackward={stepBackward}
-        />
+          <AnimationFlowControl
+            animationStep={animationStep}
+            startAnimation={startAnimation}
+            stepForward={stepForward}
+            stepBackward={stepBackward}
+          />
+        </AnimationInputGroup>
 
         <AnimationCarousel currentIndex={Math.floor(animationStep / stepsPerBlock)}>
           {Array(Math.ceil(plaintextInput.length / 8) || 1).fill(null).map((_, k) =>

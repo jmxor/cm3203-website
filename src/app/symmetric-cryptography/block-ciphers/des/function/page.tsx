@@ -1,6 +1,8 @@
 "use client"
 
 import AnimationContainer from "@/Components/AnimationContainer";
+import AnimationInputGroup from "@/Components/AnimationInputGroup";
+import AnimationTextarea from "@/Components/AnimationTextarea";
 import ExpansionAnimation from "@/Components/des-animations/ExpansionAnimation";
 import AnimationFlowControl from "@/Components/AnimationFlowControl";
 import {useState} from "react";
@@ -25,20 +27,23 @@ export default function DESFunctionPage() {
   return (
     <section className="w-full flex flex-col sm:block">
       <AnimationContainer>
-        <textarea
-          className="boxed resize-none"
-          placeholder="00101001 ..."
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          maxLength={32}
-        />
+        <AnimationInputGroup>
+          <AnimationTextarea
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            label="Plaintext 1/2-Block"
+            placeholder="00101010..."
+            highlightStart={0}
+            highlightEnd={0}
+          />
 
-        <AnimationFlowControl
-          animationStep={animationStep}
-          startAnimation={startAnimation}
-          stepForward={stepForward}
-          stepBackward={stepBackward}
-        />
+          <AnimationFlowControl
+            animationStep={animationStep}
+            startAnimation={startAnimation}
+            stepForward={stepForward}
+            stepBackward={stepBackward}
+          />
+        </AnimationInputGroup>
 
         {/* Animation Section */}
         <ExpansionAnimation
