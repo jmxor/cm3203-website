@@ -116,22 +116,20 @@ function GMCSection(props: GCMSectionProps) {
   const {plaintextBlock, ciphertextBlock, encryptionKey, initialisationVector, animationStep, stepsPerBlock, index} = props;
   const currentBlock = Math.floor(animationStep / stepsPerBlock) == index;
   return (
-    <div className="relative w-full shrink-0 bg-[url('../../public/ctr-bg.svg')]">
+    <div className="relative w-full shrink-0 bg-[url('../../public/gcm-bg-0.svg')]">
 
-      <div className="absolute top-[69px] left-[46px] w-16 h-[26px] border-2 border-black text-center align-middle font-mono">Key</div>
-
-      <div className="absolute top-[136px]">
+      <div className="absolute top-[49px] left-[9px]">
         <BitBox8x1 content={plaintextBlock} contentVisible={true} />
       </div>
 
-      <div className="flex flex-col items-center justify-center ml-[76px]">
+      <div className="w-[194px] flex flex-col items-center justify-center ml-auto mr-12">
         <BitBox8x1
           content={initialisationVector + index.toString(2).padStart(4, '0')}
           contentVisible={currentBlock && animationStep % stepsPerBlock == 0}
         />
 
-        <div className="w-[194px] h-16 mt-6 mb-[72px] flex items-center border-2 border-black font-mono text-center">
-          <span className="text-center">mult<sub>H</sub></span>
+        <div className="w-[98px] h-[50px] mt-[72px] mb-6 flex items-center justify-center border-2 border-black rounded font-mono">
+          <p className="text-center">Mult<sub>H</sub></p>
         </div>
 
         <BitBox8x1
