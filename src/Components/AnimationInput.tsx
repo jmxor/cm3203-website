@@ -16,7 +16,7 @@ export default function AnimationInput(props: AnimationInputProps) {
           {label}
       </label>
       <input
-        className="px-1 border border-black rounded-r font-mono"
+        className="px-1 border border-black rounded-r rounded-l-none font-mono"
         value={value}
         onChange={onChange}
         placeholder={placeholder}
