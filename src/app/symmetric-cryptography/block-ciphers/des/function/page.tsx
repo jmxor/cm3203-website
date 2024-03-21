@@ -35,6 +35,7 @@ export default function DESFunctionPage() {
             placeholder="00101010..."
             highlightStart={0}
             highlightEnd={0}
+            maxLength={32}
           />
 
           <AnimationFlowControl

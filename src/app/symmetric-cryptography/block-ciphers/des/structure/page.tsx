@@ -82,6 +82,7 @@ export default function DESCipherPage() {
             placeholder="00101010..."
             highlightStart={0}
             highlightEnd={0}
+            maxLength={64}
           />
 
           <AnimationFlowControl
