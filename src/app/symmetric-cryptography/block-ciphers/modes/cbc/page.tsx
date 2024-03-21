@@ -130,7 +130,7 @@ function CBCSection(props: CBCSectionProps) {
   return (
     <div className="relative w-full shrink-0 bg-[url('../../public/cbc-bg.svg')]">
 
-      <div className="absolute top-[117px] left-[54px] w-16 h-[26px] border-2 border-black text-center align-middle font-mono">Key</div>
+      <div className="absolute top-[109px] left-[102px] w-16 h-[26px] border-2 border-black text-center align-middle font-mono">Key</div>
 
       <div className="absolute top-[49px] left-[8px]">
         <BitBox8x1 content={initialisationVector} contentVisible={true} />
@@ -142,8 +142,8 @@ function CBCSection(props: CBCSectionProps) {
           contentVisible={currentBlock && animationStep % stepsPerBlock >= 0}
         />
 
-        <div className="w-[194px] h-16 mt-[72px] mb-12 flex items-center border-2 border-black font-mono">
-          <span className="text-center">Block Cipher Function</span>
+        <div className="w-[98px] h-[50px] mt-[72px] mb-6 flex items-center border-2 border-black rounded font-mono">
+          <span className="text-center">Block Cipher</span>
         </div>
 
         <BitBox8x1

@@ -125,9 +125,9 @@ function CTRSection(props: CTRSectionProps) {
   return (
     <div className="relative w-full shrink-0 bg-[url('../../public/ctr-bg.svg')]">
 
-      <div className="absolute top-[68px] left-[54px] w-16 h-[26px] border-2 border-black text-center align-middle font-mono">Key</div>
+      <div className="absolute top-[62px] left-[102px] w-16 h-[26px] border-2 border-black text-center align-middle font-mono">Key</div>
 
-      <div className="absolute top-[136px] left-[9px]">
+      <div className="absolute top-[122px] left-[9px]">
         <BitBox8x1 content={plaintextBlock} contentVisible={true} />
       </div>
 
@@ -137,8 +137,8 @@ function CTRSection(props: CTRSectionProps) {
           contentVisible={currentBlock && animationStep % stepsPerBlock == 0}
         />
 
-        <div className="w-[194px] h-16 mt-6 mb-[72px] flex items-center border-2 border-black font-mono">
-          <span className="text-center">Block Cipher Function</span>
+        <div className="w-[98px] h-[50px] mt-6 mb-[72px] flex items-center border-2 border-black rounded font-mono">
+          <span className="text-center">Block Cipher</span>
         </div>
 
         <BitBox8x1

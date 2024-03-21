@@ -111,7 +111,7 @@ function ECBSection(props: ECBSectionProps) {
   return (
     <div className="relative w-full shrink-0 bg-[url('../../public/ecb-bg.svg')]">
 
-      <div className="absolute top-[68px] left-[54px] w-16 h-[26px] border-2 border-black text-center align-middle font-mono">Key</div>
+      <div className="absolute top-[62px] left-[102px] w-16 h-[26px] border-2 border-black text-center align-middle font-mono">Key</div>
 
       <div className="w-[194px] flex flex-col items-center justify-center ml-auto mr-12">
         <BitBox8x1
@@ -119,8 +119,8 @@ function ECBSection(props: ECBSectionProps) {
           contentVisible={currentBlock && animationStep % stepsPerBlock == 0}
         />
 
-        <div className="w-[194px] h-16 my-6 flex items-center border-2 border-black font-mono">
-          <span className="text-center">Block Cipher Function</span>
+        <div className="w-[98px] h-[50px] my-6 flex items-center border-2 border-black rounded font-mono">
+          <span className="text-center">Block Cipher</span>
         </div>
 
         <BitBox8x1
