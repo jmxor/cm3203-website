@@ -1,3 +1,8 @@
 export default function stringXOR(a: string, b: string) {
-  return (a != b) ? '1' : '0'
+  let out = '';
+  for (let i = 0; i < a.length; i++) {
+    out += (a.charAt(i) != b.charAt(i)) ? '1' : '0'
+  }
+
+  return out
 }
