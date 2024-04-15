@@ -6,37 +6,45 @@ import AnimationInputGroup from "@/Components/AnimationInputGroup";
 import AnimationTextarea from "@/Components/AnimationTextarea";
 import PermutationAnimation from "@/Components/des-animations/PermutationAnimation";
 import AnimationFlowControl from "@/Components/AnimationFlowControl";
+import DESFunction from "@/functions/DESFunction";
+import stringXOR from "@/functions/stringXOR";
 import {useState} from "react";
 import {AnimatePresence, motion} from "framer-motion";
 
 export default function DESCipherPage() {
   const [animationStep, setAnimationStep] = useState(0);
   const [input, setInput] = useState('');
+  const [keyInput, setKeyInput] = useState('111111111111111111111111111111111111111111111111');
   const [block, setBlock] = useState('');
   const [paddedBlock, setPaddedBlock] = useState('');
   const [permutedBlock, setPermutedBlock] = useState('');
+  const [intermediateBlocks, setIntermediateBlocks] = useState<string[]>([]);
 
   // calculate all blocks to be used in the animation
   const startAnimation = () => {
     setAnimationStep(0);
     setBlock(input)
 
-    let padBlock = input.padEnd(64, '0')
-    setPaddedBlock(padBlock)
+    let tempPaddedBlock = input.padEnd(64, '0')
+    setPaddedBlock(tempPaddedBlock)
 
     // calculate permuted block
-    let permutedBlock = ''
-    for (let i = 57; i <= 63; i += 2) {
-      for (let j = 0; j < 8; j++) {
-        permutedBlock += padBlock.charAt(i - j * 8)
-      }
+    let tempPermutedBlock = FPTransform.map(index => tempPaddedBlock.charAt(index)).join('')
+    setPermutedBlock(tempPermutedBlock);
+
+    // calculate intermediate blocks
+    let tempIntermediateBlocks = [tempPermutedBlock]
+    for (let i = 0; i < 16; i++) {
+      let prevBlock = tempIntermediateBlocks[i]
+      let tempBlock = stringXOR(
+        prevBlock.slice(32, 64),
+        DESFunction(prevBlock.slice(0, 32), keyInput)
+      ) + prevBlock.slice(0, 32)
+
+      tempIntermediateBlocks.push(tempBlock)
     }
-    for (let i = 56; i <= 62; i += 2) {
-      for (let j = 0; j < 8; j++) {
-        permutedBlock += padBlock.charAt(i - j * 8)
-      }
-    }
-    setPermutedBlock(permutedBlock);
+    setIntermediateBlocks(tempIntermediateBlocks)
+    // console.log(tempIntermediateBlocks)
   }
 
   const stepForward = () => {
@@ -98,7 +106,7 @@ export default function DESCipherPage() {
               {animationStep <= 2 ?
                 <div className="ml-6 mr-auto">
                   <PermutationAnimation
-                    key={0}
+                    index={0}
                     content={animationStep >= 1 ? paddedBlock : block}
                     transformation={IPTransform}
                     isAnimating={animationStep >= 2}
@@ -110,7 +118,8 @@ export default function DESCipherPage() {
                     <DESStructureSection
                       key={k}
                       index={k}
-                      permutedBlock={permutedBlock}
+                      // permutedBlock={permutedBlock}
+                      permutedBlock={intermediateBlocks[k]}
                       animationStep={animationStep}
                     />
                   )}
