@@ -46,7 +46,7 @@ export default function DESSubstitution(mixedBlock: string) {
     let subBlock = mixedBlock.slice(i*6, (i*6) + 6)
     let row = parseInt(subBlock.charAt(0) + subBlock.charAt(5), 2)
     let col = parseInt(subBlock.slice(1, 5), 2)
-    substitutedBlock += substitutionMap[i][row][col]
+    substitutedBlock += substitutionMap[i][row][col].toString(2).padStart(4, '0')
   }
 
   return substitutedBlock
