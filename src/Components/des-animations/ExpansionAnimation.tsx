@@ -106,12 +106,19 @@ export default function ExpansionAnimation(props: ExpansionAnimationProps) {
         </div>
 
         {/* Grid */}
-        <div className={`grid grid-cols-4 border border-black ${!isExpanded && "border-r-0"}`}>
-          {leftBits.split('').map((b, k) => (
-            <div key={k} className="w-6 h-6 border border-black font-mono">
-              {b}
-            </div>
-          ))}
+        <div className='relative'>
+          <div className={`grid grid-cols-4 border border-black ${!isExpanded && "border-r-0"}`}>
+            {Array(16).fill(null).map((b, k) => (
+              <div key={k} className="w-6 h-6 border border-black font-mono" />
+            ))}
+          </div>
+          <div className={`absolute top-0 left-0 grid grid-cols-4 border border-transparent ${!isExpanded && "border-r-0"}`}>
+            {leftBits.split('').map((b, k) => (
+              <div key={k} className="w-6 h-6 border border-transparent font-mono">
+                {b}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -195,12 +202,19 @@ export default function ExpansionAnimation(props: ExpansionAnimationProps) {
         </div>
 
         {/* Grid */}
-        <div className={`grid grid-cols-4 border border-black ${!isExpanded && "border-l-0"}`}>
-          {rightBits.split('').map((b, k) => (
-            <div key={k} className="w-6 h-6 border border-black font-mono">
-              {b}
-            </div>
-          ))}
+        <div className='relative'>
+          <div className={`grid grid-cols-4 border border-black ${!isExpanded && "border-l-0"}`}>
+            {Array(16).fill(null).map((b, k) => (
+              <div key={k} className="w-6 h-6 border border-black font-mono"/>
+            ))}
+          </div>
+          <div className={`absolute top-0 left-0 grid grid-cols-4 border border-transparent ${!isExpanded && "border-l-0"}`}>
+            {rightBits.split('').map((b, k) => (
+              <div key={k} className="w-6 h-6 border border-transparent font-mono">
+                {b}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </motion.div>

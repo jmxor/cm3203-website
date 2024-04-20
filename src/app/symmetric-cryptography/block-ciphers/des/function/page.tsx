@@ -10,9 +10,11 @@ import {useState} from "react";
 export default function DESFunctionPage() {
   const [animationStep, setAnimationStep] = useState(0);
   const [input, setInput] = useState('');
+  const [halfBlock, setHalfBlock] = useState('');
 
   function startAnimation() {
     setAnimationStep(0);
+    setHalfBlock(input)
   }
 
   function stepForward() {
@@ -48,7 +50,7 @@ export default function DESFunctionPage() {
 
         {/* Animation Section */}
         <ExpansionAnimation
-          content={input}
+          content={halfBlock}
           isExpanded={animationStep >= 1}
           isAnimating={animationStep >= 2}
         />
