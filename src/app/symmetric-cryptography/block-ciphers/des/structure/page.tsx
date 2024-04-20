@@ -19,6 +19,7 @@ export default function DESCipherPage() {
   const [paddedBlock, setPaddedBlock] = useState('');
   const [permutedBlock, setPermutedBlock] = useState('');
   const [intermediateBlocks, setIntermediateBlocks] = useState<string[]>([]);
+  const [ciphertextBlock, setCiphertextBlock] = useState('');
 
   // calculate all blocks to be used in the animation
   const startAnimation = () => {
@@ -44,11 +45,13 @@ export default function DESCipherPage() {
       tempIntermediateBlocks.push(tempBlock)
     }
     setIntermediateBlocks(tempIntermediateBlocks)
-    // console.log(tempIntermediateBlocks)
+
+    let tempCiphertextBlock = IPTransform.map(index => tempIntermediateBlocks[16].charAt(index)).join('')
+    setCiphertextBlock(tempCiphertextBlock)
   }
 
   const stepForward = () => {
-    // TODO: prevent animation from stepping too far
+    if (animationStep == 23) return
     setAnimationStep(animationStep + 1)
   }
 
@@ -113,20 +116,58 @@ export default function DESCipherPage() {
                   />
                 </div>
                 :
-                <AnimationCarousel currentIndex={Math.max(0, animationStep - 4)}>
+                <AnimationCarousel currentIndex={Math.min(Math.max(0, animationStep - 4), 16)}>
                   {Array(16).fill(null).map((_, k) =>
                     <DESStructureSection
                       key={k}
                       index={k}
-                      // permutedBlock={permutedBlock}
                       permutedBlock={intermediateBlocks[k]}
                       animationStep={animationStep}
                     />
                   )}
+                  <AnimatePresence>
+                    {animationStep <= 20 ?
+                      <motion.div className="relative flex w-full shrink-0">
+                        <motion.div
+                          className="flex flex-col ml-6"
+                          animate={{gap: animationStep > 20 ? "0px" : "96px"}}
+                          exit={{gap: "0px"}}
+                        >
+                          <div className="grid grid-cols-8 bg-white border border-black text-center font-mono">
+                            {intermediateBlocks[16].slice(0,32).split('').map((b, k) =>
+                              <div key={k} className="w-6 h-6 border border-black" >{b}</div>
+                            )}
+                          </div>
+                          <div className="grid grid-cols-8 bg-white border border-black text-center font-mono">
+                            {intermediateBlocks[16].slice(32, 64).split('').map((b, k) =>
+                              <div key={k} className="w-6 h-6 border border-black">{b}</div>
+                            )}
+                          </div>
+                        </motion.div>
+                      </motion.div>
+                      :
+                      <div className="ml-6 mr-auto shrink-0">
+                        <PermutationAnimation
+                          index={3}
+                          content={intermediateBlocks[16]}
+                          transformation={FPTransform}
+                          isAnimating={animationStep >= 22}
+                        />
+                      </div>
+                    }
+                  </AnimatePresence>
+
                 </AnimationCarousel>
               }
             {/*</AnimatePresence>*/}
         </div>
+
+        <textarea
+          className="w-full boxed font-mono"
+          value={animationStep < 23 ? '' : ciphertextBlock}
+          onChange={undefined}
+          readOnly
+        />
       </AnimationContainer>
 
       <p>
