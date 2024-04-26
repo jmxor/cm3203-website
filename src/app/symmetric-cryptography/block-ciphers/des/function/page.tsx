@@ -80,6 +80,7 @@ export default function DESFunctionPage() {
             animate={{
               opacity: animationStep < 3 ? 0 : 1
             }}
+            initial={false}
           />
 
           <ExpansionAnimation
@@ -93,6 +94,7 @@ export default function DESFunctionPage() {
             animate={{
               opacity: animationStep < 3 ? 0 : 1
             }}
+            initial={false}
           >
             <div className='absolute top-[121px] left-[227px] w-16 h-[26px] border-2 border-black text-center'>
               Subkey
