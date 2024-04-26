@@ -7,6 +7,7 @@ import ExpansionAnimation from "@/Components/des-animations/ExpansionAnimation";
 import AnimationFlowControl from "@/Components/AnimationFlowControl";
 import PermutationAnimation from "@/Components/des-animations/PermutationAnimation";
 import DESExpansion from "@/functions/DESExpansion";
+import DESPermutation from "@/functions/DESPermutation";
 import DESSubstitution from "@/functions/DESSubstitution";
 import stringXOR from "@/functions/stringXOR";
 import {useState} from "react";
@@ -27,6 +28,7 @@ export default function DESFunctionPage() {
   const [expandedHalfBlock, setExpandedHalfBlock] = useState('');
   const [mixedHalfBlock, setMixedHalfBlock] = useState('');
   const [subbedHalfBlock, setSubbedHalfBlock] = useState('');
+  const [permutedHalfBlock, setPermutedHalfBlock] = useState('');
 
   function startAnimation() {
     setAnimationStep(0);
@@ -40,6 +42,9 @@ export default function DESFunctionPage() {
 
     let tempSubbedHalfBlock = DESSubstitution(tempMixedHalfBlock)
     setSubbedHalfBlock(tempSubbedHalfBlock)
+
+    let tempPermutedHalfBlock = DESPermutation(tempSubbedHalfBlock)
+    setPermutedHalfBlock(tempPermutedHalfBlock)
   }
 
   function stepForward() {
@@ -139,7 +144,12 @@ export default function DESFunctionPage() {
           </motion.div>
         </div>
 
-
+        <textarea
+          className="w-full boxed font-mono"
+          value={animationStep > 6 ? permutedHalfBlock : '' }
+          onChange={undefined}
+          readOnly
+        />
       </AnimationContainer>
     </section>
   )
