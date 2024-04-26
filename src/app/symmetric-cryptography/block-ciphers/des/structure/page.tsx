@@ -113,6 +113,8 @@ export default function DESCipherPage() {
                     content={animationStep >= 1 ? paddedBlock : block}
                     transformation={IPTransform}
                     isAnimating={animationStep >= 2}
+                    bitsVisible={true}
+                    size={64}
                   />
                 </div>
                 :
@@ -152,6 +154,8 @@ export default function DESCipherPage() {
                           content={intermediateBlocks[16]}
                           transformation={FPTransform}
                           isAnimating={animationStep >= 22}
+                          bitsVisible={true}
+                          size={64}
                         />
                       </div>
                     }

@@ -4,17 +4,19 @@ interface BitGridProps {
   index: number
   content: string,
   transformation: number[],
-  isAnimating: boolean
+  isAnimating: boolean,
+  bitsVisible: boolean
+  size: number
 }
 
 export default function PermutationAnimation(props: BitGridProps) {
-  const {index, content, transformation, isAnimating} = props;
+  const {index, content, transformation, isAnimating, bitsVisible, size} = props;
 
   return (
     <motion.div key={index} className="relative text-center">
       {/* Grid */}
       <div className="grid grid-cols-8 border border-black">
-        {Array(64).fill(null).map((_, k) => (
+        {Array(size).fill(null).map((_, k) => (
           <div key={k} className="w-6 h-6 border border-black"/>
         ))}
       </div>
@@ -28,6 +30,7 @@ export default function PermutationAnimation(props: BitGridProps) {
             animate={{
               x: ((isAnimating ? transformation[k] : k) % 8) * 24,
               y: Math.floor((isAnimating ? transformation[k] : k) / 8) * 24,
+              opacity: bitsVisible ? 1 : 0,
             }}
             transition={{ease: "easeInOut"}}
             initial={false}
