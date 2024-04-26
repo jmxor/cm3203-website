@@ -10,13 +10,14 @@ export default function useWindowDimensions() {
   const hasWindow = typeof window !== 'undefined';
 
   function getWindowDimensions() {
-    const {innerWidth: width, innerHeight: height} = window;
+    const width = hasWindow ? window.innerWidth : null;
+    const height = hasWindow ? window.innerHeight : null;
     return {
       width, height
     }
   }
 
-  const [windowDimensions, setWindowDimensions] = useState({width:0, height:0});
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
   useEffect(() => {
     if (hasWindow) {
@@ -27,7 +28,7 @@ export default function useWindowDimensions() {
       window.addEventListener('resize', handleResize);
       return () => window.removeEventListener('resize', handleResize)
     }
-  }, []);
+  }, [hasWindow]);
 
   return windowDimensions
 }
