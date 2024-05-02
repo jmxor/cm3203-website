@@ -2,11 +2,15 @@
 
 import AnimationCarousel from "@/Components/AnimationCarousel";
 import AnimationContainer from "@/Components/AnimationContainer";
+import AnimationInput from "@/Components/AnimationInput";
 import AnimationInputGroup from "@/Components/AnimationInputGroup";
 import AnimationTextarea from "@/Components/AnimationTextarea";
 import PermutationAnimation from "@/Components/des-animations/PermutationAnimation";
 import AnimationFlowControl from "@/Components/AnimationFlowControl";
 import DESFunction from "@/functions/DESFunction";
+import DESPermutedChoice1 from "@/functions/DESPermutedChoice1";
+import DESPermutedChoice2 from "@/functions/DESPermutedChoice2";
+import stringRotateLeft from "@/functions/stringRotateLeft";
 import stringXOR from "@/functions/stringXOR";
 import {useState} from "react";
 import {AnimatePresence, motion} from "framer-motion";
@@ -15,6 +19,8 @@ export default function DESCipherPage() {
   const [animationStep, setAnimationStep] = useState(0);
   const [input, setInput] = useState('');
   const [keyInput, setKeyInput] = useState('111111111111111111111111111111111111111111111111');
+  const [key, setKey] = useState('')
+  const [subKeys, setSubKeys] = useState<Array<string>>([]);
   const [block, setBlock] = useState('');
   const [paddedBlock, setPaddedBlock] = useState('');
   const [permutedBlock, setPermutedBlock] = useState('');
@@ -25,6 +31,24 @@ export default function DESCipherPage() {
   const startAnimation = () => {
     setAnimationStep(0);
     setBlock(input)
+    setKey(keyInput)
+
+    let rotationCounts = [1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1]
+    let tempSubKeyStates = [];
+    let tempSubKeys = [];
+
+    let tempPermutedKey = DESPermutedChoice1(keyInput);
+    let tempLeftKey = tempPermutedKey.slice(0, 28);
+    let tempRightKey = tempPermutedKey.slice(28, 57);
+
+    for (let i = 0; i < 16; i++) {
+      let count = rotationCounts[i]
+      tempLeftKey = stringRotateLeft(tempLeftKey, count)
+      tempRightKey = stringRotateLeft(tempRightKey, count)
+      let tempSubkey = DESPermutedChoice2(tempLeftKey + tempRightKey)
+      tempSubKeys.push(tempSubkey)
+    }
+    setSubKeys(tempSubKeys)
 
     let tempPaddedBlock = input.padEnd(64, '0')
     setPaddedBlock(tempPaddedBlock)
@@ -39,7 +63,7 @@ export default function DESCipherPage() {
       let prevBlock = tempIntermediateBlocks[i]
       let tempBlock = stringXOR(
         prevBlock.slice(32, 64),
-        DESFunction(prevBlock.slice(0, 32), keyInput)
+        DESFunction(prevBlock.slice(0, 32), subKeys[i])
       ) + prevBlock.slice(0, 32)
 
       tempIntermediateBlocks.push(tempBlock)
@@ -89,12 +113,23 @@ export default function DESCipherPage() {
           <AnimationTextarea
             value={input}
             onChange={e => setInput(e.target.value)}
-            label="Plaintext Block"
+            label="Plaintext Block (64-bit)"
             placeholder="00101010..."
             highlightStart={0}
             highlightEnd={0}
             maxLength={64}
           />
+
+          <AnimationTextarea
+            value={keyInput}
+            onChange={e => setKeyInput(e.target.value)}
+            label="Key (64-bit)"
+            placeholder="00101010..."
+            highlightStart={0}
+            highlightEnd={0}
+            maxLength={64}
+          />
+
 
           <AnimationFlowControl
             animationStep={animationStep}
