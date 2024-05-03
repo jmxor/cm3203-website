@@ -18,7 +18,7 @@ import {AnimatePresence, motion} from "framer-motion";
 export default function DESCipherPage() {
   const [animationStep, setAnimationStep] = useState(0);
   const [input, setInput] = useState('');
-  const [keyInput, setKeyInput] = useState('111111111111111111111111111111111111111111111111');
+  const [keyInput, setKeyInput] = useState('');
   const [key, setKey] = useState('')
   const [subKeys, setSubKeys] = useState<Array<string>>([]);
   const [block, setBlock] = useState('');
@@ -63,7 +63,7 @@ export default function DESCipherPage() {
       let prevBlock = tempIntermediateBlocks[i]
       let tempBlock = stringXOR(
         prevBlock.slice(32, 64),
-        DESFunction(prevBlock.slice(0, 32), subKeys[i])
+        DESFunction(prevBlock.slice(0, 32), tempSubKeys[i])
       ) + prevBlock.slice(0, 32)
 
       tempIntermediateBlocks.push(tempBlock)
