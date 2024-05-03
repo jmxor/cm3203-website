@@ -61,10 +61,10 @@ export default function DESCipherPage() {
     let tempIntermediateBlocks = [tempPermutedBlock]
     for (let i = 0; i < 16; i++) {
       let prevBlock = tempIntermediateBlocks[i]
-      let tempBlock = stringXOR(
-        prevBlock.slice(32, 64),
-        DESFunction(prevBlock.slice(0, 32), tempSubKeys[i])
-      ) + prevBlock.slice(0, 32)
+      let tempBlock = prevBlock.slice(32, 64) + stringXOR(
+        prevBlock.slice(0, 32),
+        DESFunction(prevBlock.slice(32, 64), tempSubKeys[i])
+      )
 
       tempIntermediateBlocks.push(tempBlock)
     }
