@@ -98,10 +98,10 @@ export default function ExpansionAnimation(props: ExpansionAnimationProps) {
             transition={{ease: "easeInOut"}}
             initial={false}
           >
-            <div className="w-6 h-6 border border-transparent bg-transparent">{leftBits.charAt(0)}</div>
-            <div className="w-6 h-6 border border-transparent bg-transparent">{leftBits.charAt(4)}</div>
-            <div className="w-6 h-6 border border-transparent bg-transparent">{leftBits.charAt(8)}</div>
-            <div className="w-6 h-6 border border-transparent bg-transparent">{leftBits.charAt(12)}</div>
+            <div className="w-6 h-6 border border-transparent bg-transparent">{leftBits.charAt(3)}</div>
+            <div className="w-6 h-6 border border-transparent bg-transparent">{leftBits.charAt(7)}</div>
+            <div className="w-6 h-6 border border-transparent bg-transparent">{leftBits.charAt(11)}</div>
+            <div className="w-6 h-6 border border-transparent bg-transparent">{leftBits.charAt(15)}</div>
           </motion.div>
         </div>
 
