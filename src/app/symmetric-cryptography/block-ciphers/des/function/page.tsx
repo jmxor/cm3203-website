@@ -1,6 +1,7 @@
 "use client"
 
 import AnimationContainer from "@/Components/AnimationContainer";
+import AnimationInput from "@/Components/AnimationInput";
 import AnimationInputGroup from "@/Components/AnimationInputGroup";
 import AnimationTextarea from "@/Components/AnimationTextarea";
 import ExpansionAnimation from "@/Components/des-animations/ExpansionAnimation";
@@ -23,7 +24,8 @@ const PTransform = [
 export default function DESFunctionPage() {
   const [animationStep, setAnimationStep] = useState(0);
   const [input, setInput] = useState('');
-  const [keyInput, setKeyInput] = useState('001101010011010100110101001101010011010100110101');
+  const [keyInput, setKeyInput] = useState('');
+  const [key, setKey] = useState('');
   const [halfBlock, setHalfBlock] = useState('');
   const [expandedHalfBlock, setExpandedHalfBlock] = useState('');
   const [mixedHalfBlock, setMixedHalfBlock] = useState('');
@@ -33,11 +35,13 @@ export default function DESFunctionPage() {
   function startAnimation() {
     setAnimationStep(0);
     setHalfBlock(input)
+    setKey(keyInput)
 
     let tempExpandedHalfBlock = DESExpansion(input)
     setExpandedHalfBlock(tempExpandedHalfBlock)
 
-    let tempMixedHalfBlock = stringXOR(tempExpandedHalfBlock, keyInput)
+    let tempMixedHalfBlock = stringXOR(tempExpandedHalfBlock, key)
+    console.log(key)
     setMixedHalfBlock(tempMixedHalfBlock)
 
     let tempSubbedHalfBlock = DESSubstitution(tempMixedHalfBlock)
@@ -68,6 +72,16 @@ export default function DESFunctionPage() {
             highlightStart={0}
             highlightEnd={0}
             maxLength={32}
+          />
+
+          <AnimationTextarea
+            value={keyInput}
+            onChange={e => setKeyInput(e.target.value)}
+            label="Subkey (48-bit)"
+            placeholder="00101010..."
+            highlightStart={0}
+            highlightEnd={0}
+            maxLength={48}
           />
 
           <AnimationFlowControl
