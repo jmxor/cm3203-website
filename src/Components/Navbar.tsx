@@ -37,7 +37,6 @@ export default function Navbar(props: NavbarProps) {
               <NavItem name="ECB" href="/symmetric-cryptography/block-ciphers/modes/ecb"/>
               <NavItem name="CBC" href="/symmetric-cryptography/block-ciphers/modes/cbc"/>
               <NavItem name="CTR" href="/symmetric-cryptography/block-ciphers/modes/ctr"/>
-              <NavItem name="GCM" href="/symmetric-cryptography/block-ciphers/modes/gcm"/>
               <NavItem name="PCBC" href="/symmetric-cryptography/block-ciphers/modes/pcbc"/>
               <NavItem name="OFB" href="/symmetric-cryptography/block-ciphers/modes/ofb"/>
             </NavItem>
