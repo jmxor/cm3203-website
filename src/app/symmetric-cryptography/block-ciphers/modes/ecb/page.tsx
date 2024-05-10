@@ -7,6 +7,7 @@ import AnimationInputGroup from "@/Components/AnimationInputGroup";
 import AnimationTextarea from "@/Components/AnimationTextarea";
 import AnimationFlowControl from "@/Components/AnimationFlowControl";
 import BitBox8x1 from "@/Components/BitBox8x1";
+import stringXOR from "@/functions/stringXOR";
 import {useState} from "react";
 
 export default function ECBModePage() {
@@ -24,10 +25,7 @@ export default function ECBModePage() {
     setPlaintext(plaintextInput);
     setEncryptionKey(keyInput);
 
-    let ciphertext = ''
-    for (let i = 0; i < plaintextInput.length; i++) {
-      ciphertext += (plaintextInput.charAt(i) != keyInput.charAt(i % 8)) ? '1' : '0'
-    }
+    let ciphertext = stringXOR(plaintextInput, keyInput)
     setCipherText(ciphertext)
   }
   
