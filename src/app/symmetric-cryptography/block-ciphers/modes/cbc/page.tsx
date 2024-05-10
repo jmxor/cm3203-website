@@ -29,13 +29,14 @@ export default function CBCModePage() {
     setInitialisationVector(IVInput);
 
     let ciphertext = ''
+    let temp = ''
     for (let i = 0; i < plaintextInput.length; i++) {
-      let temp = stringXOR(plaintextInput[i], keyInput[i % 8])
       if (i < 8) {
-        ciphertext += stringXOR(temp, IVInput[i])
+        temp += stringXOR(plaintextInput[i], IVInput[i])
       } else {
-        ciphertext += stringXOR(temp, ciphertext[i-8])
+        temp += stringXOR(plaintextInput[i], ciphertext[i-8])
       }
+      ciphertext += stringXOR(temp, keyInput[i % 8])
     }
     setCipherText(ciphertext)
   }
