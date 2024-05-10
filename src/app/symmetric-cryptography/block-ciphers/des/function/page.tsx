@@ -40,7 +40,7 @@ export default function DESFunctionPage() {
     let tempExpandedHalfBlock = DESExpansion(input)
     setExpandedHalfBlock(tempExpandedHalfBlock)
 
-    let tempMixedHalfBlock = stringXOR(tempExpandedHalfBlock, key)
+    let tempMixedHalfBlock = stringXOR(tempExpandedHalfBlock, keyInput)
     setMixedHalfBlock(tempMixedHalfBlock)
 
     let tempSubbedHalfBlock = DESSubstitution(tempMixedHalfBlock)
