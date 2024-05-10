@@ -24,7 +24,7 @@ export default function NavItem(props: PropsWithChildren<NavItemProps>) {
           ? <button className="w-4 h-4 bg-black rounded" onClick={() => toggleExpanded()}/>
           : <div className="w-4 h-2 bg-black rounded"/>
         }
-        <Link href={href} className="ml-1">{name}</Link>
+        <Link href={href} className="pl-1 grow">{name}</Link>
       </div>
       <motion.ul
         className="ml-4"
